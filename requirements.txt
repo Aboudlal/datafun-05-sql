@@ -124,13 +124,13 @@
 
 # DO NOT UNCOMMENT THESE - THEY ARE ALREADY INCLUDED.
 
-# json       - For handling JSON data
-# csv        - For reading/writing CSV files
-# sqlite3    - For working with SQLite databases (built into Python)
-# pathlib    - For working with filesystem paths
-# os         - For interacting with the OS (e.g., file paths, env vars)
-# sys        - For system-specific parameters and functions
-# urllib      - For basic URL handling and data fetching (useful with or without requests)
+json       - For handling JSON data
+csv        - For reading/writing CSV files
+sqlite3    - For working with SQLite databases (built into Python)
+pathlib    - For working with filesystem paths
+os         - For interacting with the OS (e.g., file paths, env vars)
+sys        - For system-specific parameters and functions
+urllib      - For basic URL handling and data fetching (useful with or without requests)
 
 # math        - For mathematical functions (sqrt, log, etc.)
 # statistics  - For statistical analysis (mean, median, stdev, etc.)

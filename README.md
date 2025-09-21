@@ -88,10 +88,4 @@ Example Queries in sql/queries.sql
 -   GUIDs or IDs should be stored as TEXT in SQLite since they are
     alphanumeric.
 
-------------------------------------------------------------------------
 
-✅ Commit Instructions
-
-    git add .
-    git commit -m "Update README: add project structure, setup steps, queries, and notes"
-    git push origin main

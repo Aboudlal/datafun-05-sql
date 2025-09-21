@@ -245,7 +245,7 @@ jupyterlab-git
 # numpy
 
 # Data manipulation and analysis (built on numpy, 10-20 MB)
-# pandas
+pandas
 
 # High-performance DataFrame library for large datasets (Rust-based, fast) (~5-10 MB)
 # polars

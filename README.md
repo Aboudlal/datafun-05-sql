@@ -1,80 +1,97 @@
-# DataFun-05-SQL
+DataFun-05-SQL
 
 Link to repo: https://github.com/Aboudlal/datafun-05-sql
 
----
+------------------------------------------------------------------------
 
-## 📁 Project Structure
+📂 Project Structure
 
-datafun-05-sql/
-│── data/
-│ ├── authors.csv
-│ ├── books.csv
-│
-│── sql/
-│ ├── initialize.sql ← schema creation & seed data
-│ ├── queries.sql ← example queries
-│
-│── project.sqlite3 ← SQLite database file
-│── README.md
-│── requirements.txt
-│── .gitignore
-│── .venv/ ← virtual environment (ignored in Git)
+    datafun-05-sql/
+    │── data/                # CSV data files
+    │   ├── authors.csv
+    │   ├── books.csv
+    │
+    │── sql/                 # SQL scripts
+    │   ├── initialize.sql   # schema creation & seed data
+    │   ├── queries.sql      # example queries
+    │
+    │── project.sqlite3      # SQLite database file
+    │── README.md            # project documentation
+    │── requirements.txt     # dependencies
+    │── .gitignore           # ignored files
+    │── .venv/               # virtual environment (ignored in Git)
 
-markdown
-Copy code
+------------------------------------------------------------------------
 
----
+⚙️ How to Initialize the Database
 
-## ⚙️ How to Initialize the Database
+1.  Open sql/initialize.sql in VS Code (with SQLite extension
+    installed).
+2.  Select the project.sqlite3 database as the target in the SQLite
+    extension.
+3.  Run the script (initialize.sql) — it will:
+    -   Drop tables if they already exist.
+    -   Create authors and books tables with correct data types.
+    -   Insert sample rows for testing.
+4.  Verify that the tables exist by running:
 
-1. Open `sql/initialize.sql` in VS Code (with SQLite extension installed).  
-2. Select the `project.sqlite3` database as the target in the SQLite extension.  
-3. Run the script (`initialize.sql`):  
-   - Drops tables if they already exist.  
-   - Creates `authors` and `books` tables with correct data types.  
-   - Inserts sample rows for testing.  
+    SELECT name FROM sqlite_master WHERE type='table';
 
-4. Verify that the tables exist by running:
+✅ You should see: authors, books
 
-   ```sql
-   SELECT name FROM sqlite_master WHERE type='table';
-You should see:
+------------------------------------------------------------------------
 
-nginx
-Copy code
-authors
-books
-📊 Example Queries in sql/queries.sql
-SELECT * FROM authors; — view all authors
+📊 Example Queries
 
-SELECT * FROM books; — view all books
+Example Queries in sql/queries.sql
 
-Join authors with their books:
+    -- View all authors
+    SELECT * FROM authors;
 
-sql
-Copy code
-SELECT a.first, a.last, b.title
-FROM authors AS a
-INNER JOIN books AS b
-  ON a.author_id = b.author_id;
-Count books per year:
+    -- View all books
+    SELECT * FROM books;
 
-sql
-Copy code
-SELECT year_published, COUNT(*) AS total_books
-FROM books
-GROUP BY year_published
-ORDER BY year_published;
-🚀 Using the Project
-Make sure you have Python and pandas installed (see requirements.txt).
+    -- Author full name + book title
+    SELECT a.first, a.last, b.title
+    FROM authors AS a
+    INNER JOIN books AS b ON a.author_id = b.author_id;
 
-If you want to import the full CSV data (beyond sample rows), you can use a Python loader script.
+    -- Count books per year
+    SELECT year_published, COUNT(*) AS total_books
+    FROM books
+    GROUP BY year_published
+    ORDER BY year_published;
 
-❓ Why insert authors first?
-Because books table has a foreign key referencing authors.author_id.
-So authors (the parent table) must exist and have its IDs before adding rows in books that point to them.
+------------------------------------------------------------------------
 
-🖼️ Tools & Screenshots
-SQLite Viewer extension by alexcvzz in VS Code is used to view and run SQL queries.
+🛠️ Tools & Extensions
 
+-   VS Code with SQLite Viewer extension (alexcvzz).
+-   SQLite database file (project.sqlite3).
+-   CSV files (authors.csv, books.csv).
+
+------------------------------------------------------------------------
+
+📸 Screenshots to Include in Submission
+
+-   ✅ Project files in VS Code.
+-   ✅ Example query results (authors, books, join, group by).
+-   ✅ Database tables shown in SQLite Viewer.
+
+------------------------------------------------------------------------
+
+💡 Notes
+
+-   Standalone tables (like authors) must be inserted first because they
+    don’t depend on other tables.
+-   books depends on authors (via author_id foreign key).
+-   GUIDs or IDs should be stored as TEXT in SQLite since they are
+    alphanumeric.
+
+------------------------------------------------------------------------
+
+✅ Commit Instructions
+
+    git add .
+    git commit -m "Update README: add project structure, setup steps, queries, and notes"
+    git push origin main

@@ -1,4 +1,4 @@
-# DataFun-05-SQL
+DataFun-05-SQL
 
 This project is an introduction to databases and SQL using SQLite.
 
@@ -8,94 +8,84 @@ This project is an introduction to databases and SQL using SQLite.
 
 https://github.com/Aboudlal/datafun-05-sql
 
----
+------------------------------------------------------------------------
 
-## 📁 Project Structure
+📂 Project Structure
 
 datafun-05-sql/
-├── data/
-│   ├── authors.csv
-│   ├── books.csv
+│── data/
+│ ├── authors.csv
+│ ├── books.csv
 │
-├── sql/
-│   ├── initialize.sql ← Schema definition and data insertion
-│   ├── queries.sql   ← Example SQL queries
+│── sql/
+│ ├── initialize.sql ← schema creation & seed data
+│ ├── queries.sql ← example queries
 │
-├── project.sqlite3   ← The SQLite database file
-├── README.md
-├── requirements.txt
-├── .gitignore
-├── .venv/            ← Virtual environment (ignored by Git)
-├── python create_database.py
+│── project.sqlite3 ← SQLite database file
+│── README.md
+│── requirements.txt
+│── .gitignore
+│── .venv/ ← virtual environment (ignored in Git)
+│── create_database.py
+
 
 
 
 ---
 
----
-
-## 🐍 Python Scripts
-
-We also include Python scripts in the root project folder to make working with the database easier.
+## ⚙️ How to Initialize the Database
 
 ### `create_database.py`
 This script initializes the SQLite database file (`project.sqlite3`).  
 It connects to the database, and if the file does not already exist, it creates it.  
 
-**Usage:**
-```bash
-python create_database.py
+1. Open `sql/initialize.sql` in VS Code (with SQLite extension installed).  
+2. Select the `project.sqlite3` database as the target in the SQLite extension.  
+3. Run the script (`initialize.sql`):  
+   - Drops tables if they already exist.  
+   - Creates `authors` and `books` tables with correct data types.  
+   - Inserts sample rows for testing.  
 
+4. Verify that the tables exist by running:
 
-## ⚙️ Database Initialization
+   ```sql
+   SELECT name FROM sqlite_master WHERE type='table';
+You should see:
 
-To initialize the database, follow these steps:
+nginx
+Copy code
+authors
+books
+📊 Example Queries in sql/queries.sql
+SELECT * FROM authors; — view all authors
 
-1.  Make sure you have a **SQLite extension** installed in VS Code.
-2.  Open the `sql/initialize.sql` file.
-3.  Select `project.sqlite3` as the target database in the SQLite extension.
-4.  Run the script. It will:
-    * Drop tables if they already exist.
-    * Create the `authors` and `books` tables with the correct data types.
-    * Insert sample data for testing.
+SELECT * FROM books; — view all books
 
-To verify that the tables were created, run the following query:
+Join authors with their books:
 
-```sql
-SELECT name FROM sqlite_master WHERE type='table';
-The result should show authors and books.
-
-❓ Why Insert Authors First?
-The books table has a foreign key (author_id) that references the authors table. To maintain data integrity, you must ensure that the "parent" table (authors) exists and contains the corresponding records before you can insert data into the "child" table (books).
-
-📊 Example Queries
-The sql/queries.sql file contains examples to help you manipulate the data:
-
-Select all records:
-
-SQL
-
-SELECT * FROM authors;
-SELECT * FROM books;
-Join the authors and books tables:
-
-SQL
-
-SELECT a.first_name, a.last_name, b.title
+sql
+Copy code
+SELECT a.first, a.last, b.title
 FROM authors AS a
-INNER JOIN books AS b ON a.author_id = b.author_id;
-Count books published by year:
+INNER JOIN books AS b
+  ON a.author_id = b.author_id;
+Count books per year:
 
-SQL
-
+sql
+Copy code
 SELECT year_published, COUNT(*) AS total_books
 FROM books
 GROUP BY year_published
 ORDER BY year_published;
 🚀 Using the Project
-Make sure you have Python and the required libraries (pandas, sqlite3) installed. You can install dependencies with pip install -r requirements.txt.
+Make sure you have Python and pandas installed (see requirements.txt).
 
-If you want to import data from CSV files, you can use a Python script as discussed in the course materials.
+If you want to import the full CSV data (beyond sample rows), you can use a Python loader script.
 
-🖼️ Tools
-I used the SQLite Viewer extension (developed by alexcvzz) in VS Code to view and run SQL queries.
+❓ Why insert authors first?
+Because books table has a foreign key referencing authors.author_id.
+So authors (the parent table) must exist and have its IDs before adding rows in books that point to them.
+
+🖼️ Tools & Screenshots
+SQLite Viewer extension by alexcvzz in VS Code is used to view and run SQL queries.
+

@@ -1,91 +1,119 @@
-DataFun-05-SQL
+📘 DataFun-05-SQL
 
-This project is an introduction to databases and SQL using SQLite.
+This project demonstrates how to initialize and work with an SQLite
+database using SQL scripts, CSV data files, and optional Python scripts.
+It is part of the Data Analytics Fundamentals course.
 
----
+------------------------------------------------------------------------
 
-## 🔗 Repository Link
+🔗 Repository
 
-https://github.com/Aboudlal/datafun-05-sql
+👉 GitHub Repo – datafun-05-sql
 
 ------------------------------------------------------------------------
 
 📂 Project Structure
 
-datafun-05-sql/
-│── data/
-│ ├── authors.csv
-│ ├── books.csv
-│
-│── sql/
-│ ├── initialize.sql ← schema creation & seed data
-│ ├── queries.sql ← example queries
-│
-│── project.sqlite3 ← SQLite database file
-│── README.md
-│── requirements.txt
-│── .gitignore
-│── .venv/ ← virtual environment (ignored in Git)
-│── create_database.py
+    datafun-05-sql/
+    │── data/                
+    │   ├── authors.csv      # dataset of authors
+    │   ├── books.csv        # dataset of books
+    │
+    │── sql/                 
+    │   ├── initialize.sql   # schema creation & seed data
+    │   ├── queries.sql      # example queries
+    │
+    │── project.sqlite3      # SQLite database file
+    │── create_database.py   # Python script to create the database
+    │── README.md            # project documentation
+    │── requirements.txt     # dependencies
+    │── .gitignore           # ignored files
+    │── .venv/               # virtual environment (ignored in Git)
+
+------------------------------------------------------------------------
+
+⚙️ Step 1 – Initialize the Database
+
+1.  Open sql/initialize.sql in VS Code.
+2.  Use the SQLite extension (alexcvzz) and connect to project.sqlite3.
+3.  Run all statements in initialize.sql:
+    -   Drops existing tables if they exist
+    -   Creates authors and books tables
+    -   Inserts sample data
+4.  Verify the tables exist:
+
+    SELECT name FROM sqlite_master WHERE type='table';
+
+✅ You should see:
+
+    authors
+    books
+
+------------------------------------------------------------------------
+
+📊 Step 2 – Example Queries
+
+Stored in sql/queries.sql.
+
+    -- View all authors
+    SELECT * FROM authors;
+
+    -- View all books
+    SELECT * FROM books;
+
+    -- Join authors with books
+    SELECT a.first, a.last, b.title
+    FROM authors AS a
+    INNER JOIN books AS b ON a.author_id = b.author_id;
+
+    -- Count books per year
+    SELECT year_published, COUNT(*) AS total_books
+    FROM books
+    GROUP BY year_published
+    ORDER BY year_published;
+
+------------------------------------------------------------------------
+
+🐍 Step 3 – Python Scripts
+
+create_database.py
+
+Initializes the database file (project.sqlite3).
+If the file doesn’t exist, it creates it.
+
+Usage:
+
+    python create_database.py
+
+Expected output:
+
+    Database created successfully.
+
+------------------------------------------------------------------------
+
+🛠️ Tools Used
+
+-   SQLite Viewer (alexcvzz) in VS Code (recommended)
+-   Python 3 with sqlite3 and pandas libraries
+-   CSV files for initial datasets
+
+------------------------------------------------------------------------
 
 
+💡 Notes
 
+-   Standalone tables (like authors) must be inserted first because they
+    do not depend on any other table.
+-   books depends on authors (author_id foreign key).
+-   GUIDs (unique IDs) must be stored as TEXT in SQLite because they are
+    alphanumeric.
 
----
+------------------------------------------------------------------------
 
-## ⚙️ How to Initialize the Database
+✅ Git Commands
 
-### `create_database.py`
-This script initializes the SQLite database file (`project.sqlite3`).  
-It connects to the database, and if the file does not already exist, it creates it.  
+To update your repo with changes:
 
-1. Open `sql/initialize.sql` in VS Code (with SQLite extension installed).  
-2. Select the `project.sqlite3` database as the target in the SQLite extension.  
-3. Run the script (`initialize.sql`):  
-   - Drops tables if they already exist.  
-   - Creates `authors` and `books` tables with correct data types.  
-   - Inserts sample rows for testing.  
-
-4. Verify that the tables exist by running:
-
-   ```sql
-   SELECT name FROM sqlite_master WHERE type='table';
-You should see:
-
-nginx
-Copy code
-authors
-books
-📊 Example Queries in sql/queries.sql
-SELECT * FROM authors; — view all authors
-
-SELECT * FROM books; — view all books
-
-Join authors with their books:
-
-sql
-Copy code
-SELECT a.first, a.last, b.title
-FROM authors AS a
-INNER JOIN books AS b
-  ON a.author_id = b.author_id;
-Count books per year:
-
-sql
-Copy code
-SELECT year_published, COUNT(*) AS total_books
-FROM books
-GROUP BY year_published
-ORDER BY year_published;
-🚀 Using the Project
-Make sure you have Python and pandas installed (see requirements.txt).
-
-If you want to import the full CSV data (beyond sample rows), you can use a Python loader script.
-
-❓ Why insert authors first?
-Because books table has a foreign key referencing authors.author_id.
-So authors (the parent table) must exist and have its IDs before adding rows in books that point to them.
-
-🖼️ Tools & Screenshots
-SQLite Viewer extension by alexcvzz in VS Code is used to view and run SQL queries.
-
+    git add .
+    git commit -m "Initialize database, add SQL scripts, update README"
+    git push origin main
